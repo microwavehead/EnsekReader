@@ -1,0 +1,6 @@
+@EnsekReader.API_HostAddress = http://localhost:5078
+
+GET {{EnsekReader.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
