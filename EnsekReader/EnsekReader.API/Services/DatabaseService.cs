@@ -6,15 +6,28 @@ namespace EnsekReader.API.Services
 {
     public class DatabaseService(EnsekDbContext _context) : IDatabaseService
     {
-        public bool InsertMeterReadings(List<MeterReading> readings)
+        public DatabaseResponse InsertMeterReadings(List<MeterReading> readings)
         {
+            var response = new DatabaseResponse();
             foreach (var reading in readings)
             {
-                _context.MeterReadings.Add(reading);
+                try
+                {
+                    _context.MeterReadings.Add(reading);
+                    _context.SaveChanges();
+                    response.Successful++;
+                }
+                catch
+                {
+                    _context.ChangeTracker.Clear();
+                    response.Failures++;
+                }
             }
 
-            _context.SaveChanges();
-            return false;
+            return response;
         }
+
+        public IEnumerable<MeterReading> GetMeterReadings()
+            => _context.MeterReadings.ToList();
     }
 }

@@ -12,7 +12,7 @@ namespace EnsekReader.API.Controllers
     public class FileController (IDatabaseService _databaseService, ILogger<FileController> _logger) : ControllerBase
     {        
         [HttpPost("meter-reading-uploads")]
-        public void MeterReadingUpload(IFormFile file)
+        public DatabaseResponse MeterReadingUpload(IFormFile file)
         { 
             try
             {
@@ -21,12 +21,14 @@ namespace EnsekReader.API.Controllers
                 using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
                 csvReader.Context.RegisterClassMap<MeterReadingMapping>();
 
-                _databaseService.InsertMeterReadings(csvReader.GetRecords<MeterReading>().ToList());
+                return _databaseService.InsertMeterReadings(csvReader.GetRecords<MeterReading>().ToList());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error uploading Csv");
             }
+
+            return new DatabaseResponse();
         }
     }
 }

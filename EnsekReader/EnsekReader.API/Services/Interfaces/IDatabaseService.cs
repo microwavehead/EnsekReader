@@ -4,6 +4,7 @@ namespace EnsekReader.API.Services.Interfaces
 {
     public interface IDatabaseService
     {
-        bool InsertMeterReadings(List<MeterReading> readings);
+        DatabaseResponse InsertMeterReadings(List<MeterReading> readings);
+        IEnumerable<MeterReading> GetMeterReadings();
     }
 }

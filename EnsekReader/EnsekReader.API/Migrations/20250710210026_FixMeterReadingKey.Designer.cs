@@ -4,6 +4,7 @@ using EnsekReader.API.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnsekReader.API.Migrations
 {
     [DbContext(typeof(EnsekDbContext))]
-    partial class EnsekDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250710210026_FixMeterReadingKey")]
+    partial class FixMeterReadingKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,16 +27,16 @@ namespace EnsekReader.API.Migrations
 
             modelBuilder.Entity("EnsekReader.API.Models.MeterReading", b =>
                 {
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("MeterReadingDateTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
 
                     b.Property<int>("MeterReadValue")
                         .HasColumnType("int");
 
-                    b.HasKey("AccountId", "MeterReadingDateTime");
+                    b.HasKey("MeterReadingDateTime");
 
                     b.ToTable("MeterReadings");
                 });
