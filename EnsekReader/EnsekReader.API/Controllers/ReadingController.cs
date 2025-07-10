@@ -14,5 +14,9 @@ namespace EnsekReader.API.Controllers
         [HttpGet("meter-readings")]
         public IEnumerable<MeterReading> MeterReadingUpload()
             => _databaseService.GetMeterReadings();
+
+        [HttpPost("meter-readings-clear")]
+        public void ClearMeterReadings()
+            => _databaseService.ClearMeterReadings();
     }
 }

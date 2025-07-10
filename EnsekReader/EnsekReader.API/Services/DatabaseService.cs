@@ -1,6 +1,7 @@
 ﻿using EnsekReader.API.Models;
 using EnsekReader.API.Models.Database;
 using EnsekReader.API.Services.Interfaces;
+using System.Data.Entity;
 
 namespace EnsekReader.API.Services
 {
@@ -29,5 +30,11 @@ namespace EnsekReader.API.Services
 
         public IEnumerable<MeterReading> GetMeterReadings()
             => _context.MeterReadings.ToList();
+
+        public void ClearMeterReadings()
+        {
+            _context.MeterReadings.RemoveRange(_context.MeterReadings);
+            _context.SaveChanges();
+        }
     }
 }

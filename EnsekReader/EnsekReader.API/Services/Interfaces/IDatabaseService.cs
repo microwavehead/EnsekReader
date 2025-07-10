@@ -6,5 +6,6 @@ namespace EnsekReader.API.Services.Interfaces
     {
         DatabaseResponse InsertMeterReadings(List<MeterReading> readings);
         IEnumerable<MeterReading> GetMeterReadings();
+        void ClearMeterReadings();
     }
 }
