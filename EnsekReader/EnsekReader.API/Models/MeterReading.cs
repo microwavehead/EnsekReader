@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EnsekReader.API.Models
 {
@@ -9,5 +10,7 @@ namespace EnsekReader.API.Models
         public int AccountId { get; set; }
         public DateTime MeterReadingDateTime { get; set; }
         public int MeterReadValue { get; set; }
+        [ForeignKey("AccountId")]
+        public Account Account { get; set; }
     }
 }
