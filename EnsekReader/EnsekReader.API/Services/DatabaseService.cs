@@ -12,11 +12,17 @@ namespace EnsekReader.API.Services
         public DatabaseResponse InsertMeterReadings(List<MeterReading> readings)
         {
             var successful = 0;
+
+            readings = readings.OrderBy(r => r.MeterReadValue).ToList();
             Parallel.ForEach(readings, reading =>
             {
                 try
                 {
                     var context = _contextFactory.CreateDbContext();
+
+                    if (context.MeterReadings.Any(mr => mr.MeterReadingDateTime > reading.MeterReadingDateTime && mr.AccountId == reading.AccountId))
+                        return;
+
                     context.MeterReadings.Add(reading);
                     context.SaveChanges();
                     Interlocked.Increment(ref successful);
