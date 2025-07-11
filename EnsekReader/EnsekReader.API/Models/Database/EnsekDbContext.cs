@@ -8,5 +8,6 @@ namespace EnsekReader.API.Models.Database
         { }
 
         public DbSet<MeterReading> MeterReadings { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }
