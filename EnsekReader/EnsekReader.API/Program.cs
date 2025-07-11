@@ -2,8 +2,6 @@ using EnsekReader.API.Models.Database;
 using EnsekReader.API.Services;
 using EnsekReader.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Writers;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +11,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContextFactory<EnsekDbContext>(options => {
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 0)));
+});
 
 builder.Services.AddDbContext<EnsekDbContext>(options => {
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 0)));
